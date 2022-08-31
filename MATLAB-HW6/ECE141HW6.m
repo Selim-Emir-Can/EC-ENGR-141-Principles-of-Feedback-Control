@@ -1,0 +1,44 @@
+syms s;
+t = 0:0.0001:10;
+s = tf('s');
+sys = ((s+1)*(s^2+81))/((s+13)*s^2*(s^2+100));
+H = tf([5 0],[1 2 5]);
+Hs = tf(5,[1 2 5]);
+Hsr = step(Hs, t);
+Ys = tf(5,[1 4.5 5]);
+Ysr = step(Ys, t);
+Ts = tf(5,[1 12 5]);
+Tsr = step(Ts, t);
+
+
+figure(1);
+rlocus(H);
+figure(2);
+plot(t, Hsr, t, Ysr, t, Tsr);
+xlabel('time(t)');
+ylabel('step response y(t)');
+%figure(3);
+%%plot(t, Ysr);
+%%xlabel('time(t)');
+%%ylabel('step response y(t)');
+%%figure(4);
+%%plot(t,Tsr);
+%%xlabel('time(t)');
+%%ylabel('step response y(t)');
+hold on;
+figure(3);
+rlocus(sys);
+z = 0.5;
+sgrid(z,0);
+rlocfind(sys);
+figure(4);
+rlocus(sys);
+z = 0.707;
+sgrid(z,0);
+k = rlocfind(sys);
+%num=conv([1 1], [1 0 81]);
+%den=conv([1 13 0 0], [1 0 100]);
+%sys10=tf(num,den);
+rltool(sys, 88.3317);
+
+hold off;
